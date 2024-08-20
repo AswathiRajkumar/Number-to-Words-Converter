@@ -1,0 +1,59 @@
+<html>
+<head>
+<title>Number to Words Converter</title>
+</head>
+<body>
+
+<h2>Number to Words Converter</h2>
+
+<input type="text" id="numberInput" placeholder="Enter a number (0-999)">
+<br>
+<br>
+<button onclick="convertToWords()">Convert to Words</button> 
+<div id="result"></div>
+
+<script>
+    function convertToWords() {
+        var numberInput = document.getElementById("numberInput").value.trim();
+        var resultDiv = document.getElementById("result");
+        
+        if (numberInput === "") {
+            resultDiv.innerHTML = "Please enter a number.";
+            return;
+        }
+
+        var number = parseInt(numberInput, 10);
+
+        if (isNaN(number) || number < 0 || number > 999) {
+            resultDiv.innerHTML = "Invalid input. Please enter a number between 0 and 999.";
+            return;
+        }
+
+        var ones = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'];
+        var teens = ['ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen'];
+        var tens = ['', '', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'];
+
+        var numWords = "";
+
+        if (number >= 100) {
+            numWords += ones[Math.floor(number / 100)] + " hundred ";
+            number %= 100;
+        }
+
+        if (number >= 20) {
+            numWords += tens[Math.floor(number / 10)];
+            if (number % 10 !== 0) {
+                numWords += " " + ones[number % 10];
+            }
+        } else if (number >= 10) {
+            numWords += teens[number - 10];
+        } else if (number >= 0) {
+            numWords += ones[number];
+        }
+
+        resultDiv.innerHTML= numWords;
+    }
+</script>
+
+</body>
+</html>
